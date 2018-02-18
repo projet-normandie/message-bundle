@@ -8,7 +8,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MessageAdmin extends AbstractAdmin
 {
