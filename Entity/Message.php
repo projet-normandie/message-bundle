@@ -34,7 +34,7 @@ class Message
     private $object;
 
     /**
-     * @var integer
+     * @var string
      * @ORM\Column(name="message", type="text", nullable=true)
      */
     private $message;
