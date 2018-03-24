@@ -1,8 +1,17 @@
-VideoGamesRecordsCoreBundle
+ProjetNormandieMessageBundle
 ===========================
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/video-games-records/CoreBundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/video-games-records/CoreBundle/?branch=develop)
-[![Build Status](https://travis-ci.org/video-games-records/CoreBundle.svg?branch=master)](https://travis-ci.org/video-games-records/CoreBundle)
+Master
+------
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/?branch=master)
+[![Build Status](https://travis-ci.org/projet-normandie/MessageBundle.svg?branch=master)](https://travis-ci.org/projet-normandie/MessageBundle)
+
+Develop
+-------
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/?branch=develop)
+[![Build Status](https://travis-ci.org/projet-normandie/MessageBundle.svg?branch=develop)](https://travis-ci.org/projet-normandie/MessageBundle)
 
 Installation
 ============
@@ -14,7 +23,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require video-games-records/core-bundle "~1"
+$ composer require projet-normandie/message-bundle "~1"
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -39,7 +48,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new VideoGamesRecords\CoreBundle\VideoGamesRecordsCoreBundle(),
+            new ProjetNormandie\MessageBundle\ProjetNormandieMessageBundle(),
         );
 
         // ...
@@ -55,8 +64,8 @@ Step 3: Configuration
 ### Routing
 
 ```yaml
-video_games_records_core:
-    resource: "@VideoGamesRecordsCoreBundle/Controller/"
+projet_normandie_message:
+    resource: "@ProjetNormandieMessageBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}/
     requirements:
