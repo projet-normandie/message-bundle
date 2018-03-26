@@ -57,19 +57,3 @@ class AppKernel extends Kernel
     // ...
 }
 ```
-
-Step 3: Configuration
----------------------
-
-### Routing
-
-```yaml
-projet_normandie_message:
-    resource: "@ProjetNormandieMessageBundle/Controller/"
-    type:     annotation
-    prefix:   /{_locale}/
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-```
