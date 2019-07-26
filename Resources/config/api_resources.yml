@@ -1,0 +1,12 @@
+resources:
+    ProjetNormandie\MessageBundle\Entity\Message:
+        collectionOperations:
+            get:
+                normalization_context: {'groups': [message_message_read]}
+                filters : ['pn-message.filters']
+            post:
+                access_control: 'is_granted("ROLE_USER")'
+        itemOperations:
+            get: ~
+            put:
+                access_control: 'is_granted("ROLE_USER") and (object.getSender() == user or object.getRecipient() == user)'

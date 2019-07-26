@@ -5,12 +5,14 @@ namespace ProjetNormandie\MessageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Message
  *
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
+ * @ApiResource(attributes={"order"={"id": "DESC"}})
  */
 class Message
 {
@@ -19,11 +21,11 @@ class Message
     /**
      * @var integer
      *
-     * @ORM\Column(name="idMessage", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idMessage;
+    private $id;
 
     /**
      * @var string
@@ -50,7 +52,7 @@ class Message
     /**
      * @var UserInterface
      *
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idSender", referencedColumnName="id", nullable=true)
      * })
@@ -61,13 +63,33 @@ class Message
      * @var UserInterface
      *
      * @Assert\NotNull
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idRecipient", referencedColumnName="id")
      * })
      */
     private $recipient;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isOpened", type="boolean", nullable=false, options={"default":0})
+     */
+    private $isOpened;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isDeletedSender", type="boolean", nullable=false, options={"default":0})
+     */
+    private $isDeletedSender;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isDeletedRecipient", type="boolean", nullable=false, options={"default":0})
+     */
+    private $isDeletedRecipient;
 
 
     /**
@@ -80,26 +102,26 @@ class Message
 
 
     /**
-     * Set idMessage
+     * Set id
      *
-     * @param integer $idMessage
+     * @param integer $id
      * @return $this
      */
-    public function setIdMessage($idMessage)
+    public function setId($id)
     {
-        $this->idMessage = $idMessage;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get idMessage
+     * Get id
      *
      * @return integer
      */
-    public function getIdMessage()
+    public function getId()
     {
-        return $this->idMessage;
+        return $this->id;
     }
 
     /**
@@ -210,5 +232,74 @@ class Message
     {
         $this->recipient = $recipient;
         return $this;
+    }
+
+    /**
+     * Set isOpened
+     *
+     * @param boolean $isOpened
+     * @return $this
+     */
+    public function setIsOpened($isOpened)
+    {
+        $this->isOpened = $isOpened;
+
+        return $this;
+    }
+
+    /**
+     * Get isOpened
+     *
+     * @return boolean
+     */
+    public function getIsOpened()
+    {
+        return $this->isOpened;
+    }
+
+    /**
+     * Set isDeletedSender
+     *
+     * @param boolean $isDeletedSender
+     * @return $this
+     */
+    public function setIsDeletedSender($isDeletedSender)
+    {
+        $this->isDeletedSender = $isDeletedSender;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeletedSender
+     *
+     * @return boolean
+     */
+    public function getIsDeletedSender()
+    {
+        return $this->isDeletedSender;
+    }
+
+    /**
+     * Set isDeletedRecipient
+     *
+     * @param boolean $isDeletedRecipient
+     * @return $this
+     */
+    public function setIsDeletedRecipient($isDeletedRecipient)
+    {
+        $this->isDeletedRecipient = $isDeletedRecipient;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeletedRecipient
+     *
+     * @return boolean
+     */
+    public function getIsDeletedRecipient()
+    {
+        return $this->isDeletedRecipient;
     }
 }
