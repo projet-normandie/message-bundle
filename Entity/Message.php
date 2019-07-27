@@ -47,7 +47,7 @@ class Message
      * @Assert\Length(max="50")
      * @ORM\Column(name="type", type="string", nullable=false)
      */
-    private $type;
+    private $type = 'DEFAULT';
 
     /**
      * @var UserInterface
@@ -75,21 +75,21 @@ class Message
      *
      * @ORM\Column(name="isOpened", type="boolean", nullable=false, options={"default":0})
      */
-    private $isOpened;
+    private $isOpened = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="isDeletedSender", type="boolean", nullable=false, options={"default":0})
      */
-    private $isDeletedSender;
+    private $isDeletedSender = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="isDeletedRecipient", type="boolean", nullable=false, options={"default":0})
      */
-    private $isDeletedRecipient;
+    private $isDeletedRecipient= false;
 
 
     /**
