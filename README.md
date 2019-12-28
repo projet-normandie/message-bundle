@@ -5,13 +5,11 @@ Master
 ------
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/?branch=master)
-[![Build Status](https://travis-ci.org/projet-normandie/MessageBundle.svg?branch=master)](https://travis-ci.org/projet-normandie/MessageBundle)
 
 Develop
 -------
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/projet-normandie/MessageBundle/?branch=develop)
-[![Build Status](https://travis-ci.org/projet-normandie/MessageBundle.svg?branch=develop)](https://travis-ci.org/projet-normandie/MessageBundle)
 
 Installation
 ============
@@ -57,3 +55,24 @@ class AppKernel extends Kernel
     // ...
 }
 ```
+
+Step 3: Configuration
+---------------------
+
+### Database
+
+In order to link your User entity to this module you should add the following configuration:
+(Replace ProjetNormandie\UserBundle\Entity\User with your user class).
+
+[Official documentation](http://symfony.com/doc/current/cookbook/doctrine/resolve_target_entity.html)
+
+```yaml
+# Doctrine Configuration - config.yml
+doctrine:
+    orm:
+        ...
+        resolve_target_entities:
+            ProjetNormandie\MessageBundle\Entity\UserInterface: ProjetNormandie\UserBundle\Entity\User
+```
+
+After resolving the entity you can update your database schema.

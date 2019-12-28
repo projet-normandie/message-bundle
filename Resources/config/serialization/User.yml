@@ -1,0 +1,9 @@
+App\Entity\User:
+  attributes:
+    id:
+      groups:
+        - 'message_message_read'
+    username:
+      groups:
+        - 'message_message_read'
+
