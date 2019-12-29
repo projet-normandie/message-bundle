@@ -3,6 +3,7 @@ ProjetNormandie\MessageBundle\Entity\Message:
     id:
       groups:
         - 'message_message_read'
+        - 'message_message_put'
     object:
       groups:
         - 'message_message_read'
@@ -21,12 +22,15 @@ ProjetNormandie\MessageBundle\Entity\Message:
     isOpened:
       groups:
         - 'message_message_read'
+        - 'message_message_put'
     isDeletedSender:
       groups:
         - 'message_message_read'
+        - 'message_message_put'
     isDeletedRecipient:
       groups:
         - 'message_message_read'
+        - 'message_message_put'
     createdAt:
       groups:
         - 'message_message_read'
