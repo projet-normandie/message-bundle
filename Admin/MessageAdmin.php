@@ -27,7 +27,7 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('idMessage', 'text', ['label' => 'idMessage', 'attr' => ['readonly' => true]])
+        $formMapper->add('id', 'text', ['label' => 'id', 'attr' => ['readonly' => true]])
             ->add('sender', 'sonata_type_model_list', [
                 'data_class' => null,
                 'btn_add' => false,
@@ -73,7 +73,7 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('idMessage')
+        $listMapper->addIdentifier('id')
             ->add('type')
             ->add('object', null, ['label' => 'Object'])
             ->add('sender')
@@ -87,7 +87,7 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper->add('idMessage')
+        $showMapper->add('id')
             ->add('type')
             ->add('object')
             ->add('sender')
