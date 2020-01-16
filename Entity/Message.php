@@ -97,7 +97,7 @@ class Message
      */
     public function __toString()
     {
-        return sprintf('Message [%s]', $this->idMessage);
+        return sprintf('Message [%s]', $this->id);
     }
 
 
