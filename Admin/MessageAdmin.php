@@ -8,6 +8,10 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 
 class MessageAdmin extends AbstractAdmin
 {
@@ -27,8 +31,8 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id', 'text', ['label' => 'id', 'attr' => ['readonly' => true]])
-            ->add('sender', 'sonata_type_model_list', [
+        $formMapper->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
+            ->add('sender', ModelListType::class, [
                 'data_class' => null,
                 'btn_add' => false,
                 'btn_list' => false,
@@ -37,7 +41,7 @@ class MessageAdmin extends AbstractAdmin
                 'label' => 'Sender',
                 'required' => false
             ])
-            ->add('recipient', 'sonata_type_model_list', [
+            ->add('recipient', ModelListType::class, [
                 'data_class' => null,
                 'btn_add' => false,
                 'btn_list' => false,
@@ -45,8 +49,8 @@ class MessageAdmin extends AbstractAdmin
                 'btn_catalogue' => false,
                 'label' => 'Recipient',
             ])
-            ->add('object', 'text', ['label' => 'Object'])
-            ->add('message', 'textarea', [
+            ->add('object', TextType::class, ['label' => 'Object'])
+            ->add('message', TextareaType::class, [
                 'label' => 'text',
                 'required' => true,
             ]);
@@ -58,10 +62,10 @@ class MessageAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('sender', 'doctrine_orm_model_autocomplete', [], null, [
+            ->add('sender', ModelAutocompleteFilter::class, [], null, [
                 'property' => 'username',
             ])
-            ->add('recipient', 'doctrine_orm_model_autocomplete', [], null, [
+            ->add('recipient', ModelAutocompleteFilter::class, [], null, [
                 'property' => 'username',
             ])
             ->add('type');
