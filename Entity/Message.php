@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
  * Message
@@ -14,9 +16,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
  * @ApiResource(attributes={"order"={"id": "DESC"}})
  */
-class Message
+class Message implements TimestampableInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
 
     /**
      * @var integer
