@@ -96,6 +96,6 @@ class MessageAdmin extends AbstractAdmin
             ->add('object')
             ->add('sender')
             ->add('recipient')
-            ->add('message');
+            ->add('message', null, ['label' => 'Message', 'safe' => true]);
     }
 }
