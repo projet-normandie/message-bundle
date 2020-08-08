@@ -18,7 +18,6 @@ ProjetNormandie\MessageBundle\Entity\Message:
     sender:
       groups:
         - 'message.read'
-        - 'message.post'
     recipient:
       groups:
         - 'message.read'
