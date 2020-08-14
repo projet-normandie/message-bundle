@@ -15,3 +15,6 @@ services:
         public: true
         autowire: true
         autoconfigure: false
+    ProjetNormandie\MessageBundle\Service\Messager:
+        class: ProjetNormandie\MessageBundle\Service\Messager
+        arguments: ['@doctrine.orm.entity_manager']

@@ -25,7 +25,7 @@ ProjetNormandie\MessageBundle\Entity\Message:
     isOpened:
       groups:
         - 'message.read'
-        - 'mmessage.put'
+        - 'message.put'
     isDeletedSender:
       groups:
         - 'message.read'
