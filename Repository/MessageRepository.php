@@ -4,12 +4,15 @@ namespace ProjetNormandie\MessageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use ProjetNormandie\MessageBundle\Entity\Message;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 
 class MessageRepository extends EntityRepository
 {
     /**
      * @param $data
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function create($data)
     {

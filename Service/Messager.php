@@ -5,7 +5,6 @@ namespace ProjetNormandie\MessageBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use ProjetNormandie\MessageBundle\Entity\Message;
 
-
 /**
  * Proxy to send a AMP
  */
@@ -29,7 +28,7 @@ class Messager
      * @param        $recipient
      * @param string $type
      */
-    public function send($object, $message, $sender, $recipient, $type= 'DEFAULT')
+    public function send($object, $message, $sender, $recipient, $type = 'DEFAULT')
     {
         $entity = new Message();
         $entity->setType($type);

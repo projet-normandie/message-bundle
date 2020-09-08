@@ -4,7 +4,6 @@ namespace ProjetNormandie\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -109,7 +108,7 @@ class Message implements TimestampableInterface
      * @param integer $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -132,7 +131,7 @@ class Message implements TimestampableInterface
      * @param string $object
      * @return $this
      */
-    public function setObject($object)
+    public function setObject(string $object)
     {
         $this->object = $object;
 
@@ -155,7 +154,7 @@ class Message implements TimestampableInterface
      * @param string $type
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
 
@@ -178,7 +177,7 @@ class Message implements TimestampableInterface
      * @param string $message
      * @return $this
      */
-    public function setMessage($message)
+    public function setMessage(string $message)
     {
         $this->message = $message;
         return $this;
@@ -209,7 +208,7 @@ class Message implements TimestampableInterface
      * @param UserInterface $sender
      * @return $this
      */
-    public function setSender($sender)
+    public function setSender(UserInterface $sender)
     {
         $this->sender = $sender;
         return $this;
@@ -230,7 +229,7 @@ class Message implements TimestampableInterface
      * @param UserInterface $recipient
      * @return $this
      */
-    public function setRecipient($recipient)
+    public function setRecipient(UserInterface $recipient)
     {
         $this->recipient = $recipient;
         return $this;
@@ -242,7 +241,7 @@ class Message implements TimestampableInterface
      * @param boolean $isOpened
      * @return $this
      */
-    public function setIsOpened($isOpened)
+    public function setIsOpened(bool $isOpened)
     {
         $this->isOpened = $isOpened;
 
@@ -265,7 +264,7 @@ class Message implements TimestampableInterface
      * @param boolean $isDeletedSender
      * @return $this
      */
-    public function setIsDeletedSender($isDeletedSender)
+    public function setIsDeletedSender(bool $isDeletedSender)
     {
         $this->isDeletedSender = $isDeletedSender;
 
@@ -288,7 +287,7 @@ class Message implements TimestampableInterface
      * @param boolean $isDeletedRecipient
      * @return $this
      */
-    public function setIsDeletedRecipient($isDeletedRecipient)
+    public function setIsDeletedRecipient(bool $isDeletedRecipient)
     {
         $this->isDeletedRecipient = $isDeletedRecipient;
 
