@@ -205,10 +205,10 @@ class Message implements TimestampableInterface
     /**
      * Set sender
      *
-     * @param UserInterface $sender
+     * @param $sender
      * @return $this
      */
-    public function setSender(UserInterface $sender)
+    public function setSender($sender)
     {
         $this->sender = $sender;
         return $this;
@@ -226,10 +226,10 @@ class Message implements TimestampableInterface
     /**
      * Set recipient
      *
-     * @param UserInterface $recipient
+     * @param $recipient
      * @return $this
      */
-    public function setRecipient(UserInterface $recipient)
+    public function setRecipient($recipient)
     {
         $this->recipient = $recipient;
         return $this;
