@@ -4,9 +4,11 @@ namespace ProjetNormandie\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Message
@@ -14,6 +16,17 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
  * @ApiResource(attributes={"order"={"id": "DESC"}})
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "sender": "exact",
+ *          "recipient": "exact",
+ *          "type": "exact",
+ *          "isDeletedSender": "exact",
+ *          "isDeletedRecipient": "exact",
+ *          "isOpened": "exact",
+ *     }
+ * )
  */
 class Message implements TimestampableInterface
 {
