@@ -2,27 +2,33 @@
 
 namespace ProjetNormandie\MessageBundle\Repository;
 
+use DateInterval;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
-use ProjetNormandie\MessageBundle\Entity\Message;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\OptimisticLockException;
+use VideoGamesRecords\CoreBundle\Entity\Chart;
 
 class MessageRepository extends EntityRepository
 {
     /**
-     * @param $data
-     * @throws ORMException
-     * @throws OptimisticLockException
+     *
      */
-    public function create($data)
+    public function purge()
     {
-        $message = new Message();
-        $message->setType(isset($data['type']) ? $data['type'] : 'DEFAULT');
-        $message->setObject($data['object']);
-        $message->setMessage($data['message']);
-        $message->setSender($data['sender']);
-        $message->setRecipient($data['recipient']);
-        $this->_em->persist($message);
-        $this->_em->flush();
+        //----- delete 1
+        $query = $this->_em->createQuery(
+            'DELETE projetNormandie\MessageBundle\Entity\Message m 
+            WHERE m.isDeletedSender = :isDeletedSender
+            AND m.isDeletedRecipient = :isDeletedRecipient'
+        );
+        $query->setParameter('isDeletedSender', true);
+        $query->setParameter('isDeletedRecipient', true);
+        $query->execute();
+
+        //----- delete 2
+        $date = new DateTime();
+        $date = $date->sub(DateInterval::createFromDateString('2 years'));
+        $query = $this->_em->createQuery('DELETE projetNormandie\MessageBundle\Entity\Message m WHERE m.createdAt < :date');
+        $query->setParameter('date', $date->format('Y-m-d'));
+        $query->execute();
     }
 }

@@ -103,7 +103,7 @@ class Message implements TimestampableInterface
      *
      * @ORM\Column(name="isDeletedRecipient", type="boolean", nullable=false, options={"default":0})
      */
-    private $isDeletedRecipient= false;
+    private $isDeletedRecipient = false;
 
 
     /**
