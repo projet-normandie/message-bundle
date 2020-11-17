@@ -4,8 +4,11 @@ namespace ProjetNormandie\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Message
@@ -13,10 +16,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
  * @ApiResource(attributes={"order"={"id": "DESC"}})
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "sender": "exact",
+ *          "recipient": "exact",
+ *          "type": "exact",
+ *          "isDeletedSender": "exact",
+ *          "isDeletedRecipient": "exact",
+ *          "isOpened": "exact",
+ *     }
+ * )
  */
-class Message
+class Message implements TimestampableInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
 
     /**
      * @var integer
@@ -89,7 +103,7 @@ class Message
      *
      * @ORM\Column(name="isDeletedRecipient", type="boolean", nullable=false, options={"default":0})
      */
-    private $isDeletedRecipient= false;
+    private $isDeletedRecipient = false;
 
 
     /**
@@ -97,7 +111,7 @@ class Message
      */
     public function __toString()
     {
-        return sprintf('Message [%s]', $this->idMessage);
+        return sprintf('Message [%s]', $this->id);
     }
 
 
@@ -107,7 +121,7 @@ class Message
      * @param integer $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -130,7 +144,7 @@ class Message
      * @param string $object
      * @return $this
      */
-    public function setObject($object)
+    public function setObject(string $object)
     {
         $this->object = $object;
 
@@ -153,7 +167,7 @@ class Message
      * @param string $type
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
 
@@ -176,7 +190,7 @@ class Message
      * @param string $message
      * @return $this
      */
-    public function setMessage($message)
+    public function setMessage(string $message)
     {
         $this->message = $message;
         return $this;
@@ -204,7 +218,7 @@ class Message
     /**
      * Set sender
      *
-     * @param UserInterface $sender
+     * @param $sender
      * @return $this
      */
     public function setSender($sender)
@@ -225,7 +239,7 @@ class Message
     /**
      * Set recipient
      *
-     * @param UserInterface $recipient
+     * @param $recipient
      * @return $this
      */
     public function setRecipient($recipient)
@@ -240,7 +254,7 @@ class Message
      * @param boolean $isOpened
      * @return $this
      */
-    public function setIsOpened($isOpened)
+    public function setIsOpened(bool $isOpened)
     {
         $this->isOpened = $isOpened;
 
@@ -263,7 +277,7 @@ class Message
      * @param boolean $isDeletedSender
      * @return $this
      */
-    public function setIsDeletedSender($isDeletedSender)
+    public function setIsDeletedSender(bool $isDeletedSender)
     {
         $this->isDeletedSender = $isDeletedSender;
 
@@ -286,7 +300,7 @@ class Message
      * @param boolean $isDeletedRecipient
      * @return $this
      */
-    public function setIsDeletedRecipient($isDeletedRecipient)
+    public function setIsDeletedRecipient(bool $isDeletedRecipient)
     {
         $this->isDeletedRecipient = $isDeletedRecipient;
 

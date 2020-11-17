@@ -1,8 +1,8 @@
 services:
-    sonata.admin.message:
+    sonata.admin.message.message:
         class: ProjetNormandie\MessageBundle\Admin\MessageAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "MessageBundle", label: "Message" }
+            - { name: sonata.admin, manager_type: orm, group: "group.messages", label: "label.message" }
         arguments:
             - ~
             - ProjetNormandie\MessageBundle\Entity\Message
