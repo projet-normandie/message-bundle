@@ -28,7 +28,7 @@
     "a2lix/translation-form-bundle": "To use translation in administration with sonata admin"
   },
   "autoload": {
-    "psr-4": { "VideoGamesRecords\\MessageBundle\\": "" }
+    "psr-4": { "ProjetNormandie\\MessageBundle\\": "" }
   },
   "config": {
     "preferred-install": {
