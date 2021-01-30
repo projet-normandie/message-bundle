@@ -81,6 +81,7 @@ class MessageAdmin extends AbstractAdmin
             ->add('object', null, ['label' => 'Object'])
             ->add('sender')
             ->add('recipient')
+            ->add('createdAt')
             ->add('_action', 'actions', ['actions' => ['show' => [], 'edit' => []]]);
     }
 
@@ -94,6 +95,7 @@ class MessageAdmin extends AbstractAdmin
             ->add('object')
             ->add('sender')
             ->add('recipient')
+            ->add('createdAt')
             ->add('message', null, ['label' => 'Message', 'safe' => true]);
     }
 }
