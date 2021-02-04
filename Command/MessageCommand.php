@@ -6,6 +6,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use ProjetNormandie\MessageBundle\Repository\MessageRepository;
+use ProjetNormandie\MessageBundle\Filter\Bbcode as BbcodeFilter;
 
 class MessageCommand extends Command
 {
@@ -44,7 +46,26 @@ class MessageCommand extends Command
             case 'purge':
                 $this->em->getRepository('ProjetNormandieMessageBundle:Message')->purge();
                 break;
+            case 'migrate':
+                $this->migrate();
+                break;
         }
         return 0;
+    }
+
+    /**
+     *
+     */
+    private function migrate()
+    {
+        /** @var MessageRepository $messageRepository */
+        $messageRepository = $this->em->getRepository('ProjetNormandieMessageBundle:Message');
+
+        $bbcodeFiler = new BbcodeFilter();
+        $messages = $messageRepository->findAll();
+        foreach ($messages as $message) {
+            $message->setMessage($bbcodeFiler->filter($message->getMessage()));
+        }
+        $this->em->flush();
     }
 }
