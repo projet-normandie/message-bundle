@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
@@ -17,21 +17,20 @@ class MessageAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'pnmessagebundle_admin_message';
 
-
     /**
-     * @param RouteCollection $collection
+     * @param RouteCollectionInterface $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('export');
     }
 
     /**
-     * @param FormMapper $formMapper
+     * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
+        $form->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
             ->add('sender', ModelListType::class, [
                 'data_class' => null,
                 'btn_add' => false,
@@ -57,11 +56,11 @@ class MessageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param DatagridMapper $datagridMapper
+     * @param DatagridMapper $filter
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add('sender', ModelAutocompleteFilter::class, [], null, [
                 'property' => 'username',
             ])
@@ -72,11 +71,11 @@ class MessageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ListMapper $listMapper
+     * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper->addIdentifier('id')
+        $list->addIdentifier('id')
             ->add('type')
             ->add('object', null, ['label' => 'Object'])
             ->add('sender')
@@ -86,11 +85,11 @@ class MessageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ShowMapper $showMapper
+     * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $show): void
     {
-        $showMapper->add('id')
+        $show->add('id')
             ->add('type')
             ->add('object')
             ->add('sender')
