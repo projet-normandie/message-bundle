@@ -9,6 +9,7 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
  * Message
@@ -22,9 +23,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "sender": "exact",
  *          "recipient": "exact",
  *          "type": "exact",
- *          "isDeletedSender": "exact",
- *          "isDeletedRecipient": "exact",
- *          "isOpened": "exact",
+ *     }
+ * )
+  * @ApiFilter(
+ *     BooleanFilter::class,
+ *     properties={
+ *          "isDeletedSender",
+ *          "isDeletedRecipient",
+ *          "isOpened",
  *     }
  * )
  */
@@ -87,14 +93,14 @@ class Message implements TimestampableInterface
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isOpened", type="boolean", nullable=false, options={"default":0})
+     * @ORM\Column(name="isOpened", type="boolean", nullable=false, options={"default":false})
      */
     private $isOpened = false;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isDeletedSender", type="boolean", nullable=false, options={"default":0})
+     * @ORM\Column(name="isDeletedSender", type="boolean", nullable=false, options={"default":false})
      */
     private $isDeletedSender = false;
 
