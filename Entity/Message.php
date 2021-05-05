@@ -23,6 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  *          "sender": "exact",
  *          "recipient": "exact",
  *          "type": "exact",
+ *          "object": "partial",
  *     }
  * )
   * @ApiFilter(

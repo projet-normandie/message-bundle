@@ -5,7 +5,6 @@ resources:
             get:
                 normalization_context: {'groups': [message.read]}
                 pagination_items_per_page: 10
-                filters : ['pn-message.filters']
             post:
                 access_control: 'is_granted("ROLE_USER")'
                 denormalization_context: {'groups': [message.post]}
