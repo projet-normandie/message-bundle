@@ -31,4 +31,40 @@ class MessageRepository extends EntityRepository
         $query->setParameter('date', $date->format('Y-m-d'));
         $query->execute();
     }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     */
+    public function getRecipients($user)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->join('m.recipient', 'u')
+            ->select('DISTINCT u.id,u.username')
+            ->where('m.sender = :user')
+            ->setParameter('user', $user)
+            ->andWhere('m.isDeletedSender = :isDeletedSender')
+            ->setParameter('isDeletedSender', false)
+            ->orderBy("u.username", 'ASC');
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param $user
+     * @return int|mixed|string
+     */
+    public function getSenders($user)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->join('m.sender', 'u')
+            ->select('DISTINCT u.id,u.username')
+            ->where('m.recipient = :user')
+            ->setParameter('user', $user)
+            ->andWhere('m.isDeletedRecipient = :isDeletedRecipient')
+            ->setParameter('isDeletedRecipient', false)
+            ->orderBy("u.username", 'ASC');
+
+        return $query->getQuery()->getResult();
+    }
 }
