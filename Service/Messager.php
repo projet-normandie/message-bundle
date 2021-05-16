@@ -28,7 +28,7 @@ class Messager
      * @param        $recipient
      * @param string $type
      */
-    public function send($object, $message, $sender, $recipient, $type = 'DEFAULT')
+    public function send($object, $message, $sender, $recipient, string $type = 'DEFAULT')
     {
         $entity = new Message();
         $entity->setType($type);
