@@ -2,6 +2,7 @@
 
 namespace ProjetNormandie\MessageBundle\Admin;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -9,7 +10,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 
@@ -49,9 +49,13 @@ class MessageAdmin extends AbstractAdmin
                 'label' => 'Recipient',
             ])
             ->add('object', TextType::class, ['label' => 'Object'])
-            ->add('message', TextareaType::class, [
-                'label' => 'text',
+            ->add('message', CKEditorType::class, [
+                'label' => 'Message',
                 'required' => true,
+                'config' => array(
+                    'height' => '200',
+                    'toolbar' => 'standard'
+                ),
             ]);
     }
 
