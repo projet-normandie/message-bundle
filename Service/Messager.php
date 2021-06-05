@@ -27,8 +27,9 @@ class Messager
      * @param        $sender
      * @param        $recipient
      * @param string $type
+     * @param bool   $isDeletedSender
      */
-    public function send($object, $message, $sender, $recipient, string $type = 'DEFAULT')
+    public function send($object, $message, $sender, $recipient, string $type = 'DEFAULT', bool $isDeletedSender = true)
     {
         $entity = new Message();
         $entity->setType($type);
@@ -36,6 +37,7 @@ class Messager
         $entity->setMessage($message);
         $entity->setSender($sender);
         $entity->setRecipient($recipient);
+        $entity->setIsDeletedSender($isDeletedSender);
         $this->em->persist($entity);
         $this->em->flush();
     }
