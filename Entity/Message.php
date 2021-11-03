@@ -1,5 +1,4 @@
 <?php
-
 namespace ProjetNormandie\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -40,39 +39,30 @@ class Message implements TimestampableInterface
     use TimestampableTrait;
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
-     * @var string
-     *
      * @Assert\Length(max="255")
      * @ORM\Column(name="object", type="string", nullable=false)
      */
-    private $object;
+    private ?string $object;
 
     /**
-     * @var string
      * @ORM\Column(name="message", type="text", nullable=true)
      */
-    private $message;
+    private ?string $message;
 
     /**
-     * @var string
-     *
      * @Assert\Length(max="50")
      * @ORM\Column(name="type", type="string", nullable=false)
      */
-    private $type = 'DEFAULT';
+    private ?string $type = 'DEFAULT';
 
     /**
-     * @var UserInterface
-     *
      * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idSender", referencedColumnName="id", nullable=true)
@@ -81,8 +71,6 @@ class Message implements TimestampableInterface
     private $sender;
 
     /**
-     * @var UserInterface
-     *
      * @Assert\NotNull
      * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface", fetch="EAGER")
      * @ORM\JoinColumns({
@@ -92,25 +80,19 @@ class Message implements TimestampableInterface
     private $recipient;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="isOpened", type="boolean", nullable=false, options={"default":false})
      */
-    private $isOpened = false;
+    private bool $isOpened = false;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="isDeletedSender", type="boolean", nullable=false, options={"default":false})
      */
-    private $isDeletedSender = false;
+    private bool $isDeletedSender = false;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="isDeletedRecipient", type="boolean", nullable=false, options={"default":0})
      */
-    private $isDeletedRecipient = false;
+    private bool $isDeletedRecipient = false;
 
 
     /**
@@ -124,80 +106,70 @@ class Message implements TimestampableInterface
 
     /**
      * Set id
-     *
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id)
+    public function setId(int $id): Self
     {
         $this->id = $id;
-
         return $this;
     }
 
     /**
      * Get id
-     *
      * @return integer
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
      * Set object
-     *
      * @param string $object
      * @return $this
      */
-    public function setObject(string $object)
+    public function setObject(string $object): Self
     {
         $this->object = $object;
-
         return $this;
     }
 
     /**
      * Get object
-     *
      * @return string
      */
-    public function getObject()
+    public function getObject(): ?string
     {
         return $this->object;
     }
 
     /**
      * Set type
-     *
      * @param string $type
      * @return $this
      */
-    public function setType(string $type)
+    public function setType(string $type): Self
     {
         $this->type = $type;
-
         return $this;
     }
 
     /**
      * Get type
-     *
      * @return string
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
      * Set message
-     *
      * @param string $message
      * @return $this
      */
-    public function setMessage(string $message)
+    public function setMessage(string $message): Self
     {
         $this->message = $message;
         return $this;
@@ -205,17 +177,15 @@ class Message implements TimestampableInterface
 
     /**
      * Get message
-     *
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
      * Get sender
-     * @return UserInterface
      */
     public function getSender()
     {
@@ -224,11 +194,10 @@ class Message implements TimestampableInterface
 
     /**
      * Set sender
-     *
      * @param $sender
      * @return $this
      */
-    public function setSender($sender)
+    public function setSender($sender): Self
     {
         $this->sender = $sender;
         return $this;
@@ -236,7 +205,6 @@ class Message implements TimestampableInterface
 
     /**
      * Get recipient
-     * @return UserInterface
      */
     public function getRecipient()
     {
@@ -249,7 +217,7 @@ class Message implements TimestampableInterface
      * @param $recipient
      * @return $this
      */
-    public function setRecipient($recipient)
+    public function setRecipient($recipient): Self
     {
         $this->recipient = $recipient;
         return $this;
@@ -257,69 +225,60 @@ class Message implements TimestampableInterface
 
     /**
      * Set isOpened
-     *
      * @param boolean $isOpened
      * @return $this
      */
-    public function setIsOpened(bool $isOpened)
+    public function setIsOpened(bool $isOpened): Self
     {
         $this->isOpened = $isOpened;
-
         return $this;
     }
 
     /**
      * Get isOpened
-     *
      * @return boolean
      */
-    public function getIsOpened()
+    public function getIsOpened(): bool
     {
         return $this->isOpened;
     }
 
     /**
      * Set isDeletedSender
-     *
      * @param boolean $isDeletedSender
      * @return $this
      */
-    public function setIsDeletedSender(bool $isDeletedSender)
+    public function setIsDeletedSender(bool $isDeletedSender): Self
     {
         $this->isDeletedSender = $isDeletedSender;
-
         return $this;
     }
 
     /**
      * Get isDeletedSender
-     *
      * @return boolean
      */
-    public function getIsDeletedSender()
+    public function getIsDeletedSender(): bool
     {
         return $this->isDeletedSender;
     }
 
     /**
      * Set isDeletedRecipient
-     *
      * @param boolean $isDeletedRecipient
      * @return $this
      */
-    public function setIsDeletedRecipient(bool $isDeletedRecipient)
+    public function setIsDeletedRecipient(bool $isDeletedRecipient): Self
     {
         $this->isDeletedRecipient = $isDeletedRecipient;
-
         return $this;
     }
 
     /**
      * Get isDeletedRecipient
-     *
      * @return boolean
      */
-    public function getIsDeletedRecipient()
+    public function getIsDeletedRecipient(): bool
     {
         return $this->isDeletedRecipient;
     }

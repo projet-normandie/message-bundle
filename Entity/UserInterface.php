@@ -10,9 +10,9 @@ interface UserInterface
     /**
      * @return int
      */
-    public function getId();
+    public function getId(): int;
     /**
      * @return string
      */
-    public function getUsername();
+    public function getUsername(): string;
 }

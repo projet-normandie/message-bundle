@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    private $messageService;
+    private MessageService $messageService;
 
     public function __construct(MessageService $messageService)
     {

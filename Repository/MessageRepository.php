@@ -4,11 +4,40 @@ namespace ProjetNormandie\MessageBundle\Repository;
 
 use DateInterval;
 use DateTime;
-use Doctrine\ORM\EntityRepository;
-use VideoGamesRecords\CoreBundle\Entity\Chart;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\Persistence\ManagerRegistry;
+use ProjetNormandie\MessageBundle\Entity\Message;
 
-class MessageRepository extends EntityRepository
+
+class MessageRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Message::class);
+    }
+
+    /**
+     * @param Message $message
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(Message $message)
+    {
+        $this->_em->persist($message);
+        $this->_em->flush();
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
     /**
      *
      */
@@ -34,9 +63,9 @@ class MessageRepository extends EntityRepository
 
     /**
      * @param $user
-     * @return int|mixed|string
+     * @return array
      */
-    public function getRecipients($user)
+    public function getRecipients($user): array
     {
         $query = $this->createQueryBuilder('m')
             ->join('m.recipient', 'u')
@@ -52,9 +81,9 @@ class MessageRepository extends EntityRepository
 
     /**
      * @param $user
-     * @return int|mixed|string
+     * @return array
      */
-    public function getSenders($user)
+    public function getSenders($user): array
     {
         $query = $this->createQueryBuilder('m')
             ->join('m.sender', 'u')

@@ -10,7 +10,7 @@ use ProjetNormandie\MessageBundle\Entity\Message;
  */
 class Messager
 {
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * Message constructor.
@@ -22,6 +22,7 @@ class Messager
     }
 
     /**
+     * @deprecated  use messageService->send()
      * @param        $object
      * @param        $message
      * @param        $sender

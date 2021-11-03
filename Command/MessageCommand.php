@@ -1,23 +1,23 @@
 <?php
 namespace ProjetNormandie\MessageBundle\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use ProjetNormandie\MessageBundle\Service\MessageService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use ProjetNormandie\MessageBundle\Repository\MessageRepository;
-use ProjetNormandie\MessageBundle\Filter\Bbcode as BbcodeFilter;
 
 class MessageCommand extends Command
 {
     protected static $defaultName = 'pn-message:message';
 
-    private $em;
+    private MessageService $messageService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(MessageService $messageService)
     {
-        $this->em = $em;
+        $this->messageService = $messageService;
         parent::__construct();
     }
 
@@ -38,34 +38,20 @@ class MessageCommand extends Command
      * @param InputInterface  $input
      * @param OutputInterface $output
      * @return int
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $function = $input->getArgument('function');
         switch ($function) {
             case 'purge':
-                $this->em->getRepository('ProjetNormandieMessageBundle:Message')->purge();
+                $this->messageService->purge();
                 break;
             case 'migrate':
-                $this->migrate();
+                $this->messageService->migrate();
                 break;
         }
         return 0;
-    }
-
-    /**
-     *
-     */
-    private function migrate()
-    {
-        /** @var MessageRepository $messageRepository */
-        $messageRepository = $this->em->getRepository('ProjetNormandieMessageBundle:Message');
-
-        $bbcodeFiler = new BbcodeFilter();
-        $messages = $messageRepository->findAll();
-        foreach ($messages as $message) {
-            $message->setMessage($bbcodeFiler->filter($message->getMessage()));
-        }
-        $this->em->flush();
     }
 }

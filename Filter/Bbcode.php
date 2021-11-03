@@ -3,13 +3,13 @@ namespace ProjetNormandie\MessageBundle\Filter;
 
 class Bbcode
 {
-    protected $_config = array(
+    protected array $_config = array(
         'url_limit' => 200,
         'smiley_path' => "https://picture.video-games-records.com/smiley/",
         'smiley_ext' => ".png"
     );
 
-    protected $_smileys = array(
+    protected array $_smileys = array(
         "hum", "ok", "cute", "damn", "no", "surprised", "happy", "slurp", "uhh", "hidden",
         "smile", "cool", "burnt", "robot", "think", "argh", "lol", "love", "whistle", "ko",
         "sick", "so", "yes", "wtf", "what", "cry", "sad", "pff", "angry", "dead",
@@ -17,20 +17,19 @@ class Bbcode
     );
 
 
-    //ACCESSEURS
-    public function getSmiley()
+    public function getSmiley(): array
     {
         return $this->_smileys;
     }
 
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->_config;
     }
 
     public function __construct($config = null)
     {
-        if (!is_null($config) && is_array($config)) {
+        if (is_array($config)) {
             foreach ($this->_config as $k => $v) {
                 $this->_config[$k] = (isset($config[$k])) ? $config[$k] : $this->_config[$k];
             }
@@ -39,13 +38,11 @@ class Bbcode
 
     /**
      * Defined by Zend_Filter_Interface
-     *
      * Returns the string $text, when bbcode are replace by html code
-     *
      * @param  string $text
      * @return string
      */
-    public function filter($text)
+    public function filter(string $text): string
     {
         //removing /r because it's bad!
         $text = str_replace("\r", '', $text);
@@ -98,13 +95,12 @@ class Bbcode
 
     /**
      * parse bbcode corespondig to $pattern inside $text and replace with $replace
-     *
-     * @param string $pattern
+     * @param string          $pattern
      * @param string|callback $replace
-     * @param string $text
+     * @param string          $text
      * @uses preg_replace
      */
-    protected function _replaceLoop($pattern, $replace, &$text)
+    protected function _replaceLoop(string $pattern, $replace, string &$text)
     {
         while (preg_match($pattern, $text)) {
             if (is_string($replace)) {
@@ -115,7 +111,9 @@ class Bbcode
         }
     }
 
-
+    /**
+     * @param $text
+     */
     protected function _parseSmiley(&$text)
     {
         $keys = array_keys($this->_smileys);
@@ -123,7 +121,10 @@ class Bbcode
         $text = str_replace($this->_getSmileyKey(), $this->_getSmileyImg(), $text);
     }
 
-    protected function _getSmileyKey()
+    /**
+     * @return array
+     */
+    protected function _getSmileyKey(): array
     {
         $data = array();
         foreach ($this->_smileys as $key => $smiley) {
@@ -132,7 +133,10 @@ class Bbcode
         return $data;
     }
 
-    protected function _getSmileyImg()
+    /**
+     * @return array
+     */
+    protected function _getSmileyImg(): array
     {
         $data = array();
         foreach ($this->_smileys as $key => $smiley) {
@@ -141,36 +145,49 @@ class Bbcode
         return $data;
     }
 
-
-    protected function _parseSimpleBbcode($tag, $replace, &$text)
+    /**
+     * @param string $tag
+     * @param string $replace
+     * @param string $text
+     */
+    protected function _parseSimpleBbcode(string $tag, string $replace, string &$text)
     {
         $this->_replaceLoop('#\[' . $tag . '\](.*?)\[/' . $tag . '\]#si', $replace, $text);
     }
 
-    protected function _parseParamBbcode($tag, $param, $replace, &$text)
+    /**
+     * @param string $tag
+     * @param string $param
+     * @param string $replace
+     * @param string $text
+     */
+    protected function _parseParamBbcode(string $tag,string $param,string $replace,string &$text)
     {
         $this->_replaceLoop('#\[' . $tag . '=' . $param . '\](.*?)\[/' . $tag . '\]#si', $replace, $text);
     }
 
-    //
-    // Function to parse bbcode
-    //
-    // [br]
-    protected function _parseBbcodeBr(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeBr(string &$text)
     {
         $text = preg_replace('#\[br\]#i', ' <br />', $text);
         $text = preg_replace('#\n#i', '<br />', $text);
     }
 
-    // <script...>...</script>
-    protected function _parseScriptTags(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseScriptTags(string &$text)
     {
         $text = preg_replace('#<script(.*)>(.*)</script>#iU', '&lt;script$1&gt;$2&lt;/script&gt;', $text);
         $text = preg_replace('#<script(.*)>#iU', '&lt;script$1&gt;', $text);
     }
 
-    // [img]http://www.site.tld/image.png[/img]
-    protected function _parseBbcodeImg(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeImg(string &$text)
     {
         $nbMatches = preg_match('#\[img\](.*?)\[/img\]#si', $text, $matches);
         if ($nbMatches != 0) {
@@ -198,10 +215,9 @@ class Bbcode
     /**
      * Execute *before* other bbcode parse!
      * [nobbcode]txt[/nobbcode]
-     * @param unknown_type $text
-     * @return unknown
+     * @param string $text
      */
-    protected function _parseBbcodeNobbcode(&$text)
+    protected function _parseBbcodeNobbcode(string &$text)
     {
         $text = preg_replace_callback(
             '#\[nobbcode\](.+?)\[/nobbcode\]#si',
@@ -212,8 +228,10 @@ class Bbcode
         );
     }
 
-    // [url]url[/url] & [url=url]url txt[/url]
-    protected function _parseBbcodeUrl(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeUrl(string &$text)
     {
         $text = preg_replace_callback(
             '#\[url\]([^ \"\t\n\r<]*?)\[/url\]#i',
@@ -231,8 +249,10 @@ class Bbcode
         );
     }
 
-    // [email]email[/email] & [email=email]email txt[/email]
-    protected function _parseBbcodeEmail(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeEmail(string &$text)
     {
         $this->_replaceLoop(
             '#\[email\]([^\[]*?)\[/email\]#si',
@@ -251,13 +271,19 @@ class Bbcode
         );
     }
 
-    // [code]txt[/code] & [code=language]txt[/code]
-    protected function _parseBbcodeCode(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeCode(string &$text)
     {
         $text = preg_replace_callback('#\n?\[code(=[a-zA-Z0-9]*?)?\](.+?)\[/code\]\n?#is', array($this, '_cbParseBbcodeCode'), $text);
     }
 
-    protected function _cbParseBbcodeCode($match)
+    /**
+     * @param $match
+     * @return string
+     */
+    protected function _cbParseBbcodeCode($match): string
     {
         $pattern = array("\n", "\t", '  ', '[', ']', ')', '(', '<', '>');
         $replace = array('<br />', '&nbsp; &nbsp;&nbsp;', '&nbsp;&nbsp;', '&#91;', '&#93;', '&#41;', '&#40;', '&#60;', '&#62;');
@@ -269,7 +295,10 @@ class Bbcode
         return '<div class="bbcode_code' . $code . '">' . $text . '</div>';
     }
 
-    protected function _parseBbcodeList(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeList(string &$text)
     {
         $pattern = '#\n?\[list=?(greek|square|circle|disc|I|i|A|a|1)?\](.+?)\[/list\]\n?#is';
         while (preg_match($pattern, $text)) {
@@ -277,7 +306,10 @@ class Bbcode
         }
     }
 
-    protected function _parseBbcodeQuote(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeQuote(string &$text)
     {
         //$this->_replaceLoop('#\n?\[quote\](.*)\[/quote\]\n?#mSi', '<blockquote>$1</blockquote>', $text);
         //$this->_replaceLoop('#\n?\[quote=(.*)\](.*)\[/quote\]\n?#mSi', '<blockquote><h5>$1</h5>$2</blockquote>', $text);
@@ -286,15 +318,23 @@ class Bbcode
         //$this->_replaceLoop('#\[quote author=([^\]]*)\](.*)\[/quote\]#Usi', '<blockquote><p>$1 :</p>$2</blockquote>', $text);
     }
 
-    protected function _parseBbcodeSpoiler(&$text)
+    /**
+     * @param string $text
+     */
+    protected function _parseBbcodeSpoiler(string &$text)
     {
         $this->_replaceLoop('#\[spoiler\](.*)\[/spoiler\]#Usi', '<button class="btn_spoiler" type="button">spoiler</button><div>$1</div>', $text);
         $this->_replaceLoop('#\[spoiler=[ ]*\](.*)\[/spoiler\]#Usi', '<button class="btn_spoiler" type="button">spoiler</button><div>$1</div>', $text);
         $this->_replaceLoop('#\[spoiler=([^\]]*)\](.*)\[/spoiler\]#Usi', '<button class="btn_spoiler" type="button">$1</button><div>$2</div>', $text);
     }
 
-
-    protected function _encodeUrl($url, $txt = '', $limit = 40)
+    /**
+     * @param string $url
+     * @param string $txt
+     * @param int    $limit
+     * @return string
+     */
+    protected function _encodeUrl(string $url, string $txt = '', int $limit = 40): string
     {
         // @TODO test url and check javascrip and other bad stuf
         $url_txt = ($txt != '') ? $txt : $url;
@@ -310,7 +350,12 @@ class Bbcode
         return '<a href="' . $url . '">' . $url_txt . '</a>';
     }
 
-    protected function _encodeEmail($email, $txt = '')
+    /**
+     * @param string $email
+     * @param string $txt
+     * @return string
+     */
+    protected function _encodeEmail(string $email, string $txt = ''): string
     {
         if (preg_match('#^\w([-_.]?\w)*@\w([-_.]?\w)*\.([a-z]{2,4})$#', $email)) {
             //mini anti robots
@@ -326,7 +371,11 @@ class Bbcode
         return $email;
     }
 
-    protected function _cbParseBbcodeList($match)
+    /**
+     * @param $match
+     * @return string
+     */
+    protected function _cbParseBbcodeList($match): string
     {
         $text = '<ul>';
         $text_end = '</ul>';
