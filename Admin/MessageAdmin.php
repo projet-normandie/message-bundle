@@ -23,7 +23,8 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
-        $collection->remove('export');
+        $collection->remove('export')
+            ->remove('create');
     }
 
     /**
