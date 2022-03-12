@@ -11,15 +11,14 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 final class TokenSubscriber implements EventSubscriberInterface
 {
-
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::VIEW => ['setUser', EventPriorities::PRE_VALIDATE],
@@ -34,7 +33,7 @@ final class TokenSubscriber implements EventSubscriberInterface
         $object = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (($object instanceof Message) && in_array($method, array(Request::METHOD_POST))) {
+        if (($object instanceof Message) && $method == Request::METHOD_POST) {
             $object->setSender($this->tokenStorage->getToken()->getUser());
         }
     }
