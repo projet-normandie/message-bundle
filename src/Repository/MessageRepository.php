@@ -20,8 +20,6 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param Message $message
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function save(Message $message)
     {
@@ -30,8 +28,6 @@ class MessageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function flush()
     {
@@ -63,9 +59,9 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param $user
-     * @return array
+     * @return mixed
      */
-    public function getRecipients($user): array
+    public function getRecipients($user)
     {
         $query = $this->createQueryBuilder('m')
             ->join('m.recipient', 'u')
@@ -81,9 +77,9 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param $user
-     * @return array
+     * @return mixed
      */
-    public function getSenders($user): array
+    public function getSenders($user)
     {
         $query = $this->createQueryBuilder('m')
             ->join('m.sender', 'u')
