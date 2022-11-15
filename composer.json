@@ -10,11 +10,15 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "api-platform/api-pack": "^1.2",
+        "php": "^7.4 || ^8.0",
+        "api-platform/core": "^2.7",
+        "doctrine/orm": "^2.13",
+        "friendsofsymfony/ckeditor-bundle": "^2.1",
+        "knplabs/doctrine-behaviors": "~2.0",
         "sonata-project/admin-bundle": "^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0",
-        "knplabs/doctrine-behaviors": "~2.0"
+        "symfony/event-dispatcher": "^5.4",
+        "symfony/security-bundle": "^5.4"
     },
     "autoload": {
         "psr-4": { "ProjetNormandie\\MessageBundle\\": "src/" }
