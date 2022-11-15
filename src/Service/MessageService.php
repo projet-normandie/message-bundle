@@ -25,18 +25,18 @@ class MessageService
 
     /**
      * @param $user
-     * @return array
+     * @return mixed
      */
-    public function getRecipients($user): array
+    public function getRecipients($user)
     {
         return $this->messageRepository->getRecipients($user);
     }
 
     /**
      * @param $user
-     * @return array
+     * @return mixed
      */
-    public function getSenders($user): array
+    public function getSenders($user)
     {
         return $this->messageRepository->getSenders($user);
     }
