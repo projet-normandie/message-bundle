@@ -44,13 +44,8 @@ class MessageCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $function = $input->getArgument('function');
-        switch ($function) {
-            case 'purge':
-                $this->messageService->purge();
-                break;
-            case 'migrate':
-                $this->messageService->migrate();
-                break;
+        if ($function == 'purge') {
+            $this->messageService->purge();
         }
         return 0;
     }

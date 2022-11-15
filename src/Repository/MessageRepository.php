@@ -41,7 +41,7 @@ class MessageRepository extends ServiceEntityRepository
     /**
      *
      */
-    public function purge()
+    public function purge(): void
     {
         //----- delete 1
         $query = $this->_em->createQuery(
