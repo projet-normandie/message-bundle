@@ -2,31 +2,25 @@
 
 namespace ProjetNormandie\MessageBundle\Controller;
 
-use ProjetNormandie\MessageBundle\Service\MessageService;
+use ProjetNormandie\MessageBundle\Service\MessageProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    private MessageService $messageService;
+    private MessageProvider $messageProvider;
 
-    public function __construct(MessageService $messageService)
+    public function __construct(MessageProvider $messageProvider)
     {
-        $this->messageService = $messageService;
+        $this->messageProvider = $messageProvider;
     }
 
-    /**
-     *
-     */
     public function getRecipients()
     {
-        return $this->messageService->getRecipients($this->getUser());
+        return $this->messageProvider->getRecipients($this->getUser());
     }
 
-    /**
-     *
-     */
     public function getSenders()
     {
-        return $this->messageService->getSenders($this->getUser());
+        return $this->messageProvider->getSenders($this->getUser());
     }
 }

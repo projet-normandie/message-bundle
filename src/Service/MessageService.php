@@ -2,8 +2,6 @@
 
 namespace ProjetNormandie\MessageBundle\Service;
 
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use ProjetNormandie\MessageBundle\Entity\Message;
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 
@@ -23,31 +21,6 @@ class MessageService
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * @param $user
-     * @return mixed
-     */
-    public function getRecipients($user)
-    {
-        return $this->messageRepository->getRecipients($user);
-    }
-
-    /**
-     * @param $user
-     * @return mixed
-     */
-    public function getSenders($user)
-    {
-        return $this->messageRepository->getSenders($user);
-    }
-
-    /**
-     *
-     */
-    public function purge()
-    {
-        $this->messageRepository->purge();
-    }
 
     /**
      * @param string $object
@@ -56,8 +29,6 @@ class MessageService
      * @param        $recipient
      * @param string $type
      * @param bool   $isDeletedSender
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function send(string $object, string $message, $sender, $recipient, string $type = 'DEFAULT', bool $isDeletedSender = true)
     {
