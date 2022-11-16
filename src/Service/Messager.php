@@ -6,9 +6,9 @@ use ProjetNormandie\MessageBundle\Entity\Message;
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 
 /**
- * Proxy to send a AMP
+ * Proxy to send a private message
  */
-class MessageService
+class Messager
 {
     private MessageRepository $messageRepository;
 

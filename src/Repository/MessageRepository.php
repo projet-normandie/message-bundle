@@ -5,11 +5,8 @@ namespace ProjetNormandie\MessageBundle\Repository;
 use DateInterval;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use ProjetNormandie\MessageBundle\Entity\Message;
-
 
 class MessageRepository extends ServiceEntityRepository
 {
