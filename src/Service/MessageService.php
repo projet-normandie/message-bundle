@@ -2,10 +2,7 @@
 
 namespace ProjetNormandie\MessageBundle\Service;
 
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use ProjetNormandie\MessageBundle\Entity\Message;
-use ProjetNormandie\MessageBundle\Filter\Bbcode as BbcodeFilter;
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 
 /**
@@ -24,31 +21,6 @@ class MessageService
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * @param $user
-     * @return mixed
-     */
-    public function getRecipients($user)
-    {
-        return $this->messageRepository->getRecipients($user);
-    }
-
-    /**
-     * @param $user
-     * @return mixed
-     */
-    public function getSenders($user)
-    {
-        return $this->messageRepository->getSenders($user);
-    }
-
-    /**
-     *
-     */
-    public function purge()
-    {
-        return $this->messageRepository->purge();
-    }
 
     /**
      * @param string $object
@@ -57,8 +29,6 @@ class MessageService
      * @param        $recipient
      * @param string $type
      * @param bool   $isDeletedSender
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function send(string $object, string $message, $sender, $recipient, string $type = 'DEFAULT', bool $isDeletedSender = true)
     {
@@ -70,19 +40,5 @@ class MessageService
         $entity->setRecipient($recipient);
         $entity->setIsDeletedSender($isDeletedSender);
         $this->messageRepository->save($entity);
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function migrate()
-    {
-        $bbcodeFiler = new BbcodeFilter();
-        $messages = $this->messageRepository->findAll();
-        foreach ($messages as $message) {
-            $message->setMessage($bbcodeFiler->filter($message->getMessage()));
-        }
-        $this->messageRepository->flush();
     }
 }
