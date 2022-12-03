@@ -8,7 +8,7 @@ use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 /**
  * Proxy to send a private message
  */
-class MessagerBuilder
+class MessageBuilder
 {
     private string $type = 'DEFAULT';
     private string $object;
@@ -29,9 +29,9 @@ class MessagerBuilder
 
     /**
      * @param string $type
-     * @return MessagerBuilder
+     * @return MessageBuilder
      */
-    public function setType(string $type): MessagerBuilder
+    public function setType(string $type): MessageBuilder
     {
         $this->type = $type;
         return $this;
@@ -39,9 +39,9 @@ class MessagerBuilder
 
     /**
      * @param string $object
-     * @return MessagerBuilder
+     * @return MessageBuilder
      */
-    public function setObject(string $object): MessagerBuilder
+    public function setObject(string $object): MessageBuilder
     {
         $this->object = $object;
         return $this;
@@ -49,9 +49,9 @@ class MessagerBuilder
 
     /**
      * @param string $message
-     * @return MessagerBuilder
+     * @return MessageBuilder
      */
-    public function setMessage(string $message): MessagerBuilder
+    public function setMessage(string $message): MessageBuilder
     {
         $this->message = $message;
         return $this;
@@ -59,9 +59,9 @@ class MessagerBuilder
     
     /**
      * @param $sender
-     * @return MessagerBuilder
+     * @return MessageBuilder
      */
-    public function setSender($sender): MessagerBuilder
+    public function setSender($sender): MessageBuilder
     {
         $this->sender = $sender;
         return $this;
@@ -69,9 +69,9 @@ class MessagerBuilder
     
     /**
      * @param $recipient
-     * @return MessagerBuilder
+     * @return MessageBuilder
      */
-    public function setRecipient($recipient): MessagerBuilder
+    public function setRecipient($recipient): MessageBuilder
     {
         $this->recipient = $recipient;
         return $this;
