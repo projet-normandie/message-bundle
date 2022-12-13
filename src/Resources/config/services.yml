@@ -8,6 +8,3 @@ services:
     ProjetNormandie\MessageBundle\:
         resource: '../../*'
         exclude: '../../{Admin,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-    ProjetNormandie\MessageBundle\Service\Messager:
-        class: ProjetNormandie\MessageBundle\Service\Messager
-        arguments: ['@doctrine.orm.entity_manager']
