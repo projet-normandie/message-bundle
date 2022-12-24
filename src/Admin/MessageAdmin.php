@@ -32,7 +32,7 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
+        $form->add('id', TextType::class, ['label' => 'label.id', 'attr' => ['readonly' => true]])
             ->add('sender', ModelListType::class, [
                 'data_class' => null,
                 'btn_add' => false,
@@ -48,11 +48,11 @@ class MessageAdmin extends AbstractAdmin
                 'btn_list' => false,
                 'btn_delete' => false,
                 'btn_catalogue' => false,
-                'label' => 'Recipient',
+                'label' => 'label.recipient',
             ])
-            ->add('object', TextType::class, ['label' => 'Object'])
+            ->add('object', TextType::class, ['label' => 'label.object'])
             ->add('message', CKEditorType::class, [
-                'label' => 'Message',
+                'label' => 'label.message',
                 'required' => true,
                 'config' => array(
                     'height' => '200',
@@ -68,14 +68,16 @@ class MessageAdmin extends AbstractAdmin
     {
         $filter
             ->add('sender', ModelFilter::class, [
-                 'field_type' => ModelAutocompleteType::class,
-                 'field_options' => ['property'=>'username'],
+                'label' => 'label.sender',
+                'field_type' => ModelAutocompleteType::class,
+                'field_options' => ['property'=>'username'],
             ])
             ->add('recipient', ModelFilter::class, [
-                 'field_type' => ModelAutocompleteType::class,
-                 'field_options' => ['property'=>'username'],
+                'label' => 'label.recipient',
+                'field_type' => ModelAutocompleteType::class,
+                'field_options' => ['property'=>'username'],
             ])
-            ->add('type');
+            ->add('type', null, ['label' => 'label.type']);
     }
 
     /**
@@ -83,12 +85,12 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('id')
-            ->add('type')
-            ->add('object', null, ['label' => 'Object'])
-            ->add('sender')
-            ->add('recipient')
-            ->add('createdAt')
+        $list->addIdentifier('id', null, ['label' => 'label.id'])
+            ->add('type', null, ['label' => 'label.type'])
+            ->add('object', null, ['label' => 'label.object'])
+            ->add('sender', null, ['label' => 'label.sender'])
+            ->add('recipient', null, ['label' => 'label.recipient'])
+            ->add('createdAt', null, ['label' => 'label.createdAt'])
             ->add('_action', 'actions', ['actions' => ['show' => [], 'edit' => []]]);
     }
 
@@ -97,12 +99,12 @@ class MessageAdmin extends AbstractAdmin
      */
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show->add('id')
-            ->add('type')
-            ->add('object')
-            ->add('sender')
-            ->add('recipient')
-            ->add('createdAt')
-            ->add('message', null, ['label' => 'Message', 'safe' => true]);
+        $show->add('id', null, ['label' => 'label.id'])
+            ->add('type', null, ['label' => 'label.type'])
+            ->add('object', null, ['label' => 'label.object'])
+            ->add('sender', null, ['label' => 'label.sender'])
+            ->add('recipient', null, ['label' => 'label.recipient'])
+            ->add('createdAt', null, ['label' => 'label.createdAt'])
+            ->add('message', null, ['label' => 'label.message', 'safe' => true]);
     }
 }
