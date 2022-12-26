@@ -1,2 +1,8 @@
 label:
+    createdAt: 'Créé le'
+    id: 'id'
     message: 'Message'
+    object: 'Objet'
+    recipient: 'Destinataire'
+    sender: 'Expediteur'
+    type: 'Type'
