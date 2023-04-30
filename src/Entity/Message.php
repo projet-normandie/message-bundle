@@ -13,7 +13,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 /**
  * Message
  *
- * @ORM\Table(name="message")
+ * @ORM\Table(
+ *     name="message",
+ *     indexes={
+ *         @ORM\Index(name="idx_inbox", columns={"idRecipient","isDeletedRecipient"}),
+ *         @ORM\Index(name="idx_outbox", columns={"idSender","isDeletedSender"}),
+ *         @ORM\Index(name="idx_newMessage", columns={"idRecipient","isOpened"}),
+ *         @ORM\Index(name="idx_type", columns={"idRecipient","type"}),
+ *         @ORM\Index(name="idx_object", columns={"idRecipient","object"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
  * @ApiResource(attributes={"order"={"id": "DESC"}})
  * @ApiFilter(
