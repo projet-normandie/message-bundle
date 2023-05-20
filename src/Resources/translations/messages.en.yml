@@ -5,4 +5,6 @@ label:
     object: 'Object'
     recipient: 'Recipient'
     sender: 'Sender'
+    isDeletedRecipient: 'Deleted by recipient'
+    isDeletedSender: 'Deleted by sender'
     type: 'Type'

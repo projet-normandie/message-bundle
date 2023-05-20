@@ -77,6 +77,8 @@ class MessageAdmin extends AbstractAdmin
                 'field_type' => ModelAutocompleteType::class,
                 'field_options' => ['property'=>'username'],
             ])
+            ->add('isDeletedSender', null, ['label' => 'label.isDeletedSender'])
+            ->add('isDeletedRecipient', null, ['label' => 'label.isDeletedRecipient'])
             ->add('type', null, ['label' => 'label.type']);
     }
 
@@ -89,7 +91,9 @@ class MessageAdmin extends AbstractAdmin
             ->add('type', null, ['label' => 'label.type'])
             ->add('object', null, ['label' => 'label.object'])
             ->add('sender', null, ['label' => 'label.sender'])
+            ->add('isDeletedSender', null, ['label' => 'label.isDeletedSender'])
             ->add('recipient', null, ['label' => 'label.recipient'])
+            ->add('isDeletedRecipient', null, ['label' => 'label.isDeletedRecipient'])
             ->add('createdAt', null, ['label' => 'label.createdAt'])
             ->add('_action', 'actions', ['actions' => ['show' => [], 'edit' => []]]);
     }
@@ -103,7 +107,9 @@ class MessageAdmin extends AbstractAdmin
             ->add('type', null, ['label' => 'label.type'])
             ->add('object', null, ['label' => 'label.object'])
             ->add('sender', null, ['label' => 'label.sender'])
+            ->add('isDeletedSender', null, ['label' => 'label.isDeletedSender'])
             ->add('recipient', null, ['label' => 'label.recipient'])
+            ->add('isDeletedRecipient', null, ['label' => 'label.isDeletedRecipient'])
             ->add('createdAt', null, ['label' => 'label.createdAt'])
             ->add('message', null, ['label' => 'label.message', 'safe' => true]);
     }
