@@ -1,0 +1,7 @@
+services:
+    ProjetNormandie\MessageBundle\Command\PurgeCommand:
+        class: ProjetNormandie\MessageBundle\Command\PurgeCommand
+        arguments:
+            - '@pn.message.repository.message'
+        tags:
+            - { name: 'console.command', command: 'pn-message:purge' }

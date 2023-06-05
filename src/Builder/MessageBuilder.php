@@ -1,9 +1,9 @@
 <?php
 
-namespace ProjetNormandie\MessageBundle\Service;
+namespace ProjetNormandie\MessageBundle\Builder;
 
+use Doctrine\ORM\EntityManagerInterface;
 use ProjetNormandie\MessageBundle\Entity\Message;
-use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 
 /**
  * Proxy to send a private message
@@ -16,15 +16,15 @@ class MessageBuilder
     private $sender;
     private $recipient;
 
-    private MessageRepository $messageRepository;
+    private EntityManagerInterface $em;
 
     /**
      * Message constructor.
-     * @param MessageRepository $messageRepository
+     * @param EntityManagerInterface $em
      */
-    public function __construct(MessageRepository $messageRepository)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->messageRepository = $messageRepository;
+        $this->em = $em;
     }
 
     /**
@@ -89,6 +89,7 @@ class MessageBuilder
             ->setIsDeletedSender(true)
             ;
 
-        $this->messageRepository->save($message);
+        $this->em->persist($message);
+        $this->em->flush();
     }
 }

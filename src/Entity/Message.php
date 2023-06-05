@@ -24,6 +24,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  *     }
  * )
  * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
+ * @ORM\EntityListeners({"ProjetNormandie\MessageBundle\EventListener\Entity\MessageListener"})
  * @ApiResource(attributes={"order"={"id": "DESC"}})
  * @ApiFilter(
  *     SearchFilter::class,
