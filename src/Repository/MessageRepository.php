@@ -4,33 +4,10 @@ namespace ProjetNormandie\MessageBundle\Repository;
 
 use DateInterval;
 use DateTime;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use ProjetNormandie\MessageBundle\Entity\Message;
+use Doctrine\ORM\EntityRepository;
 
-class MessageRepository extends ServiceEntityRepository
+class MessageRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Message::class);
-    }
-
-    /**
-     * @param Message $message
-     */
-    public function save(Message $message)
-    {
-        $this->_em->persist($message);
-        $this->_em->flush();
-    }
-
-    /**
-     */
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
     /**
      *
      */

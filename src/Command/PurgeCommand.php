@@ -3,11 +3,10 @@ namespace ProjetNormandie\MessageBundle\Command;
 
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PurgeCommandHandler extends Command
+class PurgeCommand extends Command
 {
     protected static $defaultName = 'pn-message:purge';
 
