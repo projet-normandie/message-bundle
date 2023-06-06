@@ -24,7 +24,8 @@ class MessageListener
      */
     public function prePersist(Message $message, LifecycleEventArgs $event): void
     {
-        $message->setSender($this->security->getUser());
-
+        if (null === $message->getSender()) {
+            $message->setSender($this->security->getUser());
+        }
     }
 }
