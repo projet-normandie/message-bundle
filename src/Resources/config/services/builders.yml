@@ -2,4 +2,4 @@ services:
     pn.message.builder.message:
         class: ProjetNormandie\MessageBundle\Builder\MessageBuilder
         arguments:
-            - '@doctrine.orm.dwh_entity_manager'
+            - '@doctrine.orm.default_entity_manager'
