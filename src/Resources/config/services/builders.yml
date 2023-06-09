@@ -1,5 +1,0 @@
-services:
-    pn.message.builder.message:
-        class: ProjetNormandie\MessageBundle\Builder\MessageBuilder
-        arguments:
-            - '@doctrine.orm.default_entity_manager'

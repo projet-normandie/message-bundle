@@ -1,5 +1,0 @@
-services:
-    ProjetNormandie\MessageBundle\Controller\UserController:
-        arguments:
-            - '@pn.message.repository.message'
-        tags: ['controller.service_arguments']
