@@ -35,4 +35,4 @@ services:
         class: ProjetNormandie\MessageBundle\Repository\MessageRepository
         factory: [ '@doctrine.orm.dwh_entity_manager', 'getRepository' ]
         arguments:
-            - VideoGamesRecords\MessageBundle\Entity\Message
+            - ProjetNormandie\MessageBundle\Entity\Message
