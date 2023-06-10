@@ -33,6 +33,6 @@ services:
 
     pn.message.repository.message:
         class: ProjetNormandie\MessageBundle\Repository\MessageRepository
-        factory: [ '@doctrine.orm.dwh_entity_manager', 'getRepository' ]
+        factory: [ '@doctrine.orm.entity_manager', 'getRepository' ]
         arguments:
             - ProjetNormandie\MessageBundle\Entity\Message
