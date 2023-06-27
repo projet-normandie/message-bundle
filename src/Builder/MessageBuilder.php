@@ -56,7 +56,7 @@ class MessageBuilder
         $this->message = $message;
         return $this;
     }
-    
+
     /**
      * @param $sender
      * @return MessageBuilder
@@ -66,7 +66,7 @@ class MessageBuilder
         $this->sender = $sender;
         return $this;
     }
-    
+
     /**
      * @param $recipient
      * @return MessageBuilder

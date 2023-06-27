@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Security;
 
 class MessageListener
 {
-     private Security $security;
+    private Security $security;
 
     /**
      * @param Security $security
