@@ -8,7 +8,7 @@
 >
 
     <testsuites>
-        <testsuite name="VGR Core Bundle Test Suite">
+        <testsuite name="PN Message Bundle Test Suite">
             <directory>tests/</directory>
         </testsuite>
     </testsuites>
