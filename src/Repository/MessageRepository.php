@@ -26,7 +26,9 @@ class MessageRepository extends EntityRepository
         //----- delete 2
         $date = new DateTime();
         $date = $date->sub(DateInterval::createFromDateString('2 years'));
-        $query = $this->_em->createQuery('DELETE projetNormandie\MessageBundle\Entity\Message m WHERE m.createdAt < :date');
+        $query = $this->_em->createQuery(
+            'DELETE projetNormandie\MessageBundle\Entity\Message m WHERE m.createdAt < :date'
+        );
         $query->setParameter('date', $date->format('Y-m-d'));
         $query->execute();
     }
