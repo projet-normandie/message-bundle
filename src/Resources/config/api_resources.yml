@@ -10,16 +10,21 @@ resources:
                 access_control: 'is_granted("ROLE_USER")'
                 denormalization_context: {'groups': [message.post]}
                 normalization_context: {'groups': [message.read]}
+            get-nb-new-message:
+                access_control: 'is_granted("ROLE_USER")'
+                method: 'GET'
+                path: '/messages/get-nb-new-message'
+                controller: 'ProjetNormandie\MessageBundle\Controller\User\GetNbNewMessage'
             get-recipients:
                 access_control: 'is_granted("ROLE_USER")'
                 method: 'GET'
                 path: '/messages/get-recipients'
-                controller: 'ProjetNormandie\MessageBundle\Controller\UserController::getRecipients'
+                controller: 'ProjetNormandie\MessageBundle\Controller\User\GetRecipients'
             get-senders:
                 access_control: 'is_granted("ROLE_USER")'
                 method: 'GET'
                 path: '/messages/get-senders'
-                controller: 'ProjetNormandie\MessageBundle\Controller\UserController::getSenders'
+                controller: 'ProjetNormandie\MessageBundle\Controller\User\GetSenders'
         itemOperations:
             get:
                 access_control: 'is_granted("ROLE_USER")'

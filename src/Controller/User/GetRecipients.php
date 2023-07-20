@@ -1,11 +1,11 @@
 <?php
 
-namespace ProjetNormandie\MessageBundle\Controller;
+namespace ProjetNormandie\MessageBundle\Controller\User;
 
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class UserController extends AbstractController
+class GetRecipients extends AbstractController
 {
     private MessageRepository $messageRepository;
 
@@ -14,13 +14,8 @@ class UserController extends AbstractController
         $this->messageRepository = $messageRepository;
     }
 
-    public function getRecipients()
+    public function __invoke()
     {
         return $this->messageRepository->getRecipients($this->getUser());
-    }
-
-    public function getSenders()
-    {
-        return $this->messageRepository->getSenders($this->getUser());
     }
 }

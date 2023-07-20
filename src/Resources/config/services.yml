@@ -1,11 +1,8 @@
 services:
     _defaults:
-        autowire: true
-        autoconfigure: true
+        autowire: false
+        autoconfigure: false
         public: false
-    ProjetNormandie\MessageBundle\:
-        resource: '../../*'
-        exclude: '../../{Admin,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     pn.message.builder.message:
         class: ProjetNormandie\MessageBundle\Builder\MessageBuilder
@@ -18,11 +15,6 @@ services:
             - '@pn.message.repository.message'
         tags:
             - { name: 'console.command', command: 'pn-message:purge' }
-
-    ProjetNormandie\MessageBundle\Controller\UserController:
-        arguments:
-            - '@pn.message.repository.message'
-        tags: [ 'controller.service_arguments' ]
 
     pn.message.event.entity.message:
         class: ProjetNormandie\MessageBundle\EventListener\Entity\MessageListener

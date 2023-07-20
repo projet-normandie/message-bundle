@@ -5,6 +5,8 @@ namespace ProjetNormandie\MessageBundle\Repository;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class MessageRepository extends EntityRepository
 {
@@ -67,5 +69,25 @@ class MessageRepository extends EntityRepository
             ->orderBy("u.username", 'ASC');
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param $user
+     * @return float|int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getNbNewMessage($user)
+    {
+        $qb = $this->createQueryBuilder('m')
+             ->select('COUNT(m.id)')
+             ->where('m.recipient = :recipient')
+             ->andWhere('m.isOpened = :isOpened')
+             ->andWhere('m.isDeletedRecipient = :isDeletedRecipient')
+             ->setParameter('recipient', $user)
+             ->setParameter('isOpened', false)
+             ->setParameter('isDeletedRecipient', false);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 }
