@@ -1,7 +1,8 @@
 <?php
 
-namespace ProjetNormandie\MessageBundle;
+declare(strict_types=1);
 
+namespace ProjetNormandie\MessageBundle;
 
 final class ProjetNormandieMessageEvents
 {

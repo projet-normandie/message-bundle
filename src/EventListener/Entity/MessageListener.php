@@ -1,28 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\MessageBundle\EventListener\Entity;
 
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use ProjetNormandie\MessageBundle\Entity\Message;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class MessageListener
 {
-    private Security $security;
-
-    /**
-     * @param Security $security
-     */
-    public function __construct(Security $security)
+    public function __construct(private readonly Security $security)
     {
-        $this->security = $security;
     }
 
-    /**
-     * @param Message       $message
-     * @param LifecycleEventArgs $event
-     */
-    public function prePersist(Message $message, LifecycleEventArgs $event): void
+    public function prePersist(Message $message): void
     {
         if (null === $message->getSender()) {
             $message->setSender($this->security->getUser());

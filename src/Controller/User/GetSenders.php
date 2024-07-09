@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\MessageBundle\Controller\User;
 
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;

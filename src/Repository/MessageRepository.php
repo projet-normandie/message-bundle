@@ -1,18 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\MessageBundle\Repository;
 
 use DateInterval;
 use DateTime;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
+use ProjetNormandie\MessageBundle\Entity\Message;
 
-class MessageRepository extends EntityRepository
+class MessageRepository  extends ServiceEntityRepository
 {
-    /**
-     *
-     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Message::class);
+    }
+
     public function purge(): void
     {
         //----- delete 1
@@ -35,10 +41,6 @@ class MessageRepository extends EntityRepository
         $query->execute();
     }
 
-    /**
-     * @param $user
-     * @return mixed
-     */
     public function getRecipients($user)
     {
         $query = $this->createQueryBuilder('m')
@@ -53,10 +55,6 @@ class MessageRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
 
-    /**
-     * @param $user
-     * @return mixed
-     */
     public function getSenders($user)
     {
         $query = $this->createQueryBuilder('m')
@@ -71,12 +69,6 @@ class MessageRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
 
-    /**
-     * @param $user
-     * @return float|int
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
     public function getNbNewMessage($user)
     {
         $qb = $this->createQueryBuilder('m')

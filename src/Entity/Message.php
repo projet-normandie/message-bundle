@@ -1,293 +1,195 @@
 <?php
+
 namespace ProjetNormandie\MessageBundle\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use ProjetNormandie\MessageBundle\Repository\MessageRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
-use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
-/**
- * Message
- *
- * @ORM\Table(
- *     name="message",
- *     indexes={
- *         @ORM\Index(name="idx_inbox", columns={"idRecipient","isDeletedRecipient"}),
- *         @ORM\Index(name="idx_outbox", columns={"idSender","isDeletedSender"}),
- *         @ORM\Index(name="idx_newMessage", columns={"idRecipient","isOpened"}),
- *         @ORM\Index(name="idx_type", columns={"idRecipient","type"}),
- *         @ORM\Index(name="idx_object", columns={"idRecipient","object"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="ProjetNormandie\MessageBundle\Repository\MessageRepository")
- * @ORM\EntityListeners({"ProjetNormandie\MessageBundle\EventListener\Entity\MessageListener"})
- * @ApiResource(attributes={"order"={"id": "DESC"}})
- * @ApiFilter(
- *     SearchFilter::class,
- *     properties={
- *          "sender": "exact",
- *          "recipient": "exact",
- *          "type": "exact",
- *          "object": "partial",
- *     }
- * )
-  * @ApiFilter(
- *     BooleanFilter::class,
- *     properties={
- *          "isDeletedSender",
- *          "isDeletedRecipient",
- *          "isOpened",
- *     }
- * )
- */
-class Message implements TimestampableInterface
+#[ORM\Index(name: "idx_inbox", columns: ["recipient_id", 'is_deleted_recipient'])]
+#[ORM\Index(name: "idx_outbox", columns: ["sender_id", 'is_deleted_sender'])]
+#[ORM\Index(name: "idx_newMessage", columns: ["recipient_id", 'is_opened'])]
+#[ORM\Index(name: "idx_type", columns: ["recipient_id", "type"])]
+#[ORM\Index(name: "idx_object", columns: ["recipient_id", "object"])]
+#[ORM\Table(name:'pnm_message')]
+#[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ORM\EntityListeners(["ProjetNormandie\MessageBundle\EventListener\Entity\MessageListener"])]
+#[ApiResource(
+    order: ['id' => 'DESC'],
+    operations: [
+        new GetCollection(
+            security: 'is_granted("ROLE_USER")',
+            paginationItemsPerPage: 10
+        ),
+        new Get(
+            security: 'is_granted("ROLE_USER") and (object.getSender() == user or object.getRecipient() == user)'
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['message:insert']],
+            security: 'is_granted("ROLE_USER")'
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['message:update']],
+            security: 'is_granted("ROLE_USER") and (object.getSender() == user or object.getRecipient() == user)'
+        )
+    ],
+    normalizationContext: ['groups' => ['message:read', 'user:read','message:recipient', 'message:sender']]
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'sender' => 'exact',
+        'recipient' => 'exact',
+        'type' => 'exact',
+        'object' => 'partial'
+    ]
+)]
+#[ApiFilter(BooleanFilter::class, properties: ['isDeletedSender', 'isDeletedRecipient', 'isOpened'])]
+class Message
 {
-    use TimestampableTrait;
+    use TimestampableEntity;
 
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[Groups(['message:read', 'message:update'])]
+    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     private ?int $id = null;
 
-    /**
-     * @Assert\Length(max="255")
-     * @ORM\Column(name="object", type="string", nullable=false)
-     */
+    #[Groups(['message:read', 'message:insert'])]
+    #[Assert\Length(max: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $object;
 
-    /**
-     * @ORM\Column(name="message", type="text", nullable=true)
-     */
+    #[Groups(['message:read', 'message:insert'])]
+    #[ORM\Column(type:'text', nullable: true)]
     private ?string $message;
 
-    /**
-     * @Assert\Length(max="50")
-     * @ORM\Column(name="type", type="string", nullable=false)
-     */
+    #[Groups(['message:read'])]
+    #[Assert\Length(max: 50)]
+    #[ORM\Column(length: 50, nullable: false, options: ['default' => 'DEFAULT'])]
     private ?string $type = 'DEFAULT';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface", fetch="EAGER")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idSender", referencedColumnName="id", nullable=true)
-     * })
-     */
+    #[Groups(['message:read'])]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, fetch: 'EAGER')]
+    #[ORM\JoinColumn(name:'sender_id', referencedColumnName:'id', nullable:false)]
     private $sender;
 
-    /**
-     * @Assert\NotNull
-     * @ORM\ManyToOne(targetEntity="ProjetNormandie\MessageBundle\Entity\UserInterface", fetch="EAGER")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idRecipient", referencedColumnName="id")
-     * })
-     */
+    #[Groups(['message:read', 'message:insert'])]
+    #[ORM\ManyToOne(targetEntity: UserInterface::class, fetch: 'EAGER')]
+    #[ORM\JoinColumn(name:'recipient_id', referencedColumnName:'id', nullable:false)]
     private $recipient;
 
-    /**
-     * @ORM\Column(name="isOpened", type="boolean", nullable=false, options={"default":false})
-     */
+    #[Groups(['message:read', 'message:update'])]
+    #[ORM\Column(nullable: false, options: ['default' => false])]
     private bool $isOpened = false;
 
-    /**
-     * @ORM\Column(name="isDeletedSender", type="boolean", nullable=false, options={"default":false})
-     */
+    #[Groups(['message:read', 'message:update'])]
+    #[ORM\Column(nullable: false, options: ['default' => false])]
     private bool $isDeletedSender = false;
 
-    /**
-     * @ORM\Column(name="isDeletedRecipient", type="boolean", nullable=false, options={"default":0})
-     */
+    #[Groups(['message:read', 'message:update'])]
+    #[ORM\Column(nullable: false, options: ['default' => false])]
     private bool $isDeletedRecipient = false;
 
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return sprintf('Message [%s]', $this->id);
     }
 
-
-    /**
-     * Set id
-     * @param integer $id
-     * @return $this
-     */
-    public function setId(int $id): Self
+    public function setId(int $id): void
     {
         $this->id = $id;
-        return $this;
     }
 
-    /**
-     * Get id
-     * @return integer
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set object
-     * @param string $object
-     * @return $this
-     */
-    public function setObject(string $object): Self
+    public function setObject(string $object): void
     {
         $this->object = $object;
-        return $this;
     }
 
-    /**
-     * Get object
-     * @return string
-     */
     public function getObject(): ?string
     {
         return $this->object;
     }
 
-    /**
-     * Set type
-     * @param string $type
-     * @return $this
-     */
-    public function setType(string $type): Self
+    public function setType(string $type): void
     {
         $this->type = $type;
-        return $this;
     }
 
-    /**
-     * Get type
-     * @return string
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * Set message
-     * @param string $message
-     * @return $this
-     */
-    public function setMessage(string $message): Self
+    public function setMessage(string $message): void
     {
         $this->message = $message;
-        return $this;
     }
 
-    /**
-     * Get message
-     * @return string
-     */
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    /**
-     * Get sender
-     */
     public function getSender()
     {
         return $this->sender;
     }
 
-    /**
-     * Set sender
-     * @param $sender
-     * @return $this
-     */
-    public function setSender($sender): Self
+    public function setSender($sender): void
     {
         $this->sender = $sender;
-        return $this;
     }
 
-    /**
-     * Get recipient
-     */
     public function getRecipient()
     {
         return $this->recipient;
     }
 
-    /**
-     * Set recipient
-     *
-     * @param $recipient
-     * @return $this
-     */
-    public function setRecipient($recipient): Self
+    public function setRecipient($recipient): void
     {
         $this->recipient = $recipient;
-        return $this;
     }
 
-    /**
-     * Set isOpened
-     * @param boolean $isOpened
-     * @return $this
-     */
-    public function setIsOpened(bool $isOpened): Self
+    public function setIsOpened(bool $isOpened): void
     {
         $this->isOpened = $isOpened;
-        return $this;
     }
 
-    /**
-     * Get isOpened
-     * @return boolean
-     */
     public function getIsOpened(): bool
     {
         return $this->isOpened;
     }
 
-    /**
-     * Set isDeletedSender
-     * @param boolean $isDeletedSender
-     * @return $this
-     */
-    public function setIsDeletedSender(bool $isDeletedSender): Self
+    public function setIsDeletedSender(bool $isDeletedSender): void
     {
         $this->isDeletedSender = $isDeletedSender;
-        return $this;
     }
 
-    /**
-     * Get isDeletedSender
-     * @return boolean
-     */
     public function getIsDeletedSender(): bool
     {
         return $this->isDeletedSender;
     }
 
-    /**
-     * Set isDeletedRecipient
-     * @param boolean $isDeletedRecipient
-     * @return $this
-     */
-    public function setIsDeletedRecipient(bool $isDeletedRecipient): Self
+    public function setIsDeletedRecipient(bool $isDeletedRecipient): void
     {
         $this->isDeletedRecipient = $isDeletedRecipient;
-        return $this;
     }
 
-    /**
-     * Get isDeletedRecipient
-     * @return boolean
-     */
     public function getIsDeletedRecipient(): bool
     {
         return $this->isDeletedRecipient;
