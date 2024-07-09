@@ -1,43 +1,5 @@
 ProjetNormandie\MessageBundle\Entity\Message:
   attributes:
-    id:
-      groups:
-        - 'message.read'
-        - 'message.put'
-    object:
-      groups:
-        - 'message.read'
-        - 'message.post'
-    type:
-      groups:
-        - 'message.read'
-    message:
-      groups:
-        - 'message.read'
-        - 'message.post'
-    sender:
-      groups:
-        - 'message.read'
-    recipient:
-      groups:
-        - 'message.read'
-        - 'message.post'
-    isOpened:
-      groups:
-        - 'message.read'
-        - 'message.put'
-    isDeletedSender:
-      groups:
-        - 'message.read'
-        - 'message.put'
-    isDeletedRecipient:
-      groups:
-        - 'message.read'
-        - 'message.put'
     createdAt:
       groups:
-        - 'message.read'
-    updatedAt:
-      groups: []
-
-
+        - 'message:read'

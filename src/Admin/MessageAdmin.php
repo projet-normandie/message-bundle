@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\MessageBundle\Admin;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;

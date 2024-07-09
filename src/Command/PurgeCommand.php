@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ProjetNormandie\MessageBundle\Command;
 
 use ProjetNormandie\MessageBundle\Repository\MessageRepository;
@@ -8,8 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PurgeCommand extends Command
 {
-    protected static $defaultName = 'pn-message:purge';
-
     private MessageRepository $messageRepository;
 
     public function __construct(MessageRepository $messageRepository)
@@ -18,7 +19,7 @@ class PurgeCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('pn-message:purge')

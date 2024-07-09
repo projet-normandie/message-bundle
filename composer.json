@@ -10,17 +10,17 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
-        "api-platform/core": "^2.7",
-        "doctrine/orm": "^2.13",
+        "php": "^8.1",
+        "api-platform/core": "^3.2",
+        "doctrine/orm": "^2.5",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
-        "knplabs/doctrine-behaviors": "~2.0",
+        "gedmo/doctrine-extensions": "^3.11",
         "sonata-project/admin-bundle": "^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^4.8",
-        "symfony/console": "^5.4",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/event-dispatcher": "^5.4",
-        "symfony/security-bundle": "^5.4"
+        "symfony/console": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/event-dispatcher": "^6.4",
+        "symfony/security-bundle": "^6.4"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.3",
