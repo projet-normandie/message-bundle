@@ -25,8 +25,6 @@ class GetNbNewMessage extends AbstractController
 
     /**
      * @return int
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
     public function __invoke(): int
     {
